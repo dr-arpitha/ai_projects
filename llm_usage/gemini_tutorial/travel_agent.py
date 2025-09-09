@@ -5,7 +5,7 @@ import requests
 import os
 from datetime import date
 
-SERP_API_KEY = os.environ.get("SERP API", "bf2987f54be6eee7a21aa83a6f2e0d98566646d02f0cfa33ba82bca764e5474c")
+SERP_API_KEY = os.environ.get("SERP API", os.getenv("SERP_API_KEY"))
 
 def event_api(query: str, htichips: str = "date:today"):
   URL = f"https://serpapi.com/search.json?api_key={SERP_API_KEY}&engine=google_events&q={query}&htichips={htichips}&hl=en&gl=us"
