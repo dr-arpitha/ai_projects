@@ -3,6 +3,7 @@ import os
 from qdrant_client import QdrantClient
 from qdrant_client.models import PointStruct
 from qdrant_client.models import Distance, VectorParams
+from log_config.logging_config import logger
 
 #client = QdrantClient(url="http://localhost:6333")
 client = QdrantClient(
@@ -27,7 +28,7 @@ operation_info = client.upsert(
     ],
 )
 
-print(operation_info)
+logger.debug(operation_info)
 search_result = client.query_points(
     collection_name="test_collection",
     query=[0.2, 0.1, 0.9, 0.7],
@@ -35,6 +36,6 @@ search_result = client.query_points(
     limit=3
 ).points
 
-print(search_result)
+logger.debug(search_result)
 
 

@@ -1,6 +1,8 @@
 # Import the Pinecone library
 import os
 import time
+from log_config.logging_config import logger
+# from logging_config import logger
 
 from pinecone import Pinecone
 
@@ -83,11 +85,13 @@ time.sleep(10)
 
 # View stats for the index
 stats = dense_index.describe_index_stats()
-print(stats)
+logger.debug(stats)
 
-print("Continuing the search")
+logger.info("Continuing the search")
 # Define the query
 query = "Famous historical structures and monuments"
+
+logger.debug(query)
 
 # Search the dense index
 results = dense_index.search(
@@ -105,15 +109,15 @@ results = dense_index.search(
     }
 )
 
-print(results)
-print(type(results))
+logger.debug(results)
+logger.info(type(results))
 if len(results['result']['hits']) > 0:
-    print("Data retrieved")
+    logger.debug("Data retrieved")
 else:
-    print("No data available")
+    logger.debug("No data available")
 # Print the results
 for hit in results['result']['hits']:
-        print(f"id: {hit['_id']:<5} | score: {round(hit['_score'], 2):<5} | category: {hit['fields']['category']:<10} | text: {hit['fields']['chunk_text']:<50}")
+        logger.info(f"id: {hit['_id']:<5} | score: {round(hit['_score'], 2):<5} | category: {hit['fields']['category']:<10} | text: {hit['fields']['chunk_text']:<50}")
 
 # Delete the index
 pc.delete_index(index_name)
